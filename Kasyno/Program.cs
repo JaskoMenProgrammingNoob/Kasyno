@@ -62,9 +62,11 @@ public class Guy
             player1.WriteMyInfo();
             Console.Write("Stawiana kwota gracza 1: ");
             string howMuch = Console.ReadLine();
+            if (howMuch == "") return;
             Console.Write("Stawiana kwota gracza 2: ");
             string howMuch2 = Console.ReadLine();
-            if (howMuch == "") return;
+            
+            if (howMuch2 == "") return;
             if (int.TryParse(howMuch, out int amount) && int.TryParse(howMuch2, out int amount2))
             {
                 int pot = player.GiveCash(amount) * 2;
@@ -75,8 +77,8 @@ public class Guy
                     {
                         int winnings = pot;
                         int winnigns1 = pot2;
-                        Console.WriteLine("Gracz 1 wygrał" + winnings + " ZŁ.");
-                        Console.WriteLine("Gracz 2 wygrał" + winnings + " ZŁ.");
+                        Console.WriteLine("Gracz 1 wygrał " + winnings + " ZŁ.");
+                        Console.WriteLine("Gracz 2 wygrał " + winnigns1 + " ZŁ.");
                         player.ReceiveCash(winnings);
                         player1.ReceiveCash(winnigns1);
                     }
