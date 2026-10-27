@@ -54,23 +54,31 @@ public class Guy
         double max = 0.75;
         double szansa = losowa_szansa.NextDouble() * (max - min) + min;
         Guy player = new Guy { Cash = 100, Name = "Gracz" };
+        Guy player1 = new Guy { Cash = 200, Name = "Gracz 2" };
         Console.WriteLine($"Witaj w kasynie. Prawdopodobieństwo przegranej: {szansa:F2}");
-        while (player.Cash > 0)
+        while (player.Cash > 0 && player1.Cash > 0)
         {
             player.WriteMyInfo();
-            Console.Write("Stawiana kwota: ");
+            player1.WriteMyInfo();
+            Console.Write("Stawiana kwota gracza 1: ");
             string howMuch = Console.ReadLine();
+            Console.Write("Stawiana kwota gracza 2: ");
+            string howMuch2 = Console.ReadLine();
             if (howMuch == "") return;
-            if (int.TryParse(howMuch, out int amount))
+            if (int.TryParse(howMuch, out int amount) && int.TryParse(howMuch2, out int amount2))
             {
                 int pot = player.GiveCash(amount) * 2;
-                if (pot > 0)
+                int pot2 = player1.GiveCash(amount2) * 2;
+                if (pot > 0 && pot2 > 0)
                 {
                     if (random.NextDouble() > szansa)
                     {
                         int winnings = pot;
-                        Console.WriteLine("Wygrałeś: " + winnings + " ZŁ.");
+                        int winnigns1 = pot2;
+                        Console.WriteLine("Gracz 1 wygrał" + winnings + " ZŁ.");
+                        Console.WriteLine("Gracz 2 wygrał" + winnings + " ZŁ.");
                         player.ReceiveCash(winnings);
+                        player1.ReceiveCash(winnigns1);
                     }
                     else
                     {
