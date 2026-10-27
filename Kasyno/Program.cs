@@ -45,43 +45,47 @@ public class Guy
         }
 
     }
-        static void Main(string[] args)
+    static void Main(string[] args)
+    {
+        Random random = new Random();
+        //double odds = .75;
+        Random losowa_szansa = new Random();
+        double min = 0.10;
+        double max = 0.75;
+        double szansa = losowa_szansa.NextDouble() * (max - min) + min;
+        Guy player = new Guy { Cash = 100, Name = "Gracz" };
+        Console.WriteLine($"Witaj w kasynie. Prawdopodobieństwo przegranej: {szansa:F2}");
+        while (player.Cash > 0)
         {
-            Random random = new Random();
-            double odds = .75;
-            Guy player = new Guy { Cash = 100, Name = "Gracz" };
-            Console.WriteLine($"Witaj w kasynie. Prawdopodobieństwo przegranej: {odds}");
-            while (player.Cash > 0)
+            player.WriteMyInfo();
+            Console.Write("Stawiana kwota: ");
+            string howMuch = Console.ReadLine();
+            if (howMuch == "") return;
+            if (int.TryParse(howMuch, out int amount))
             {
-                player.WriteMyInfo();
-                Console.Write("Stawiana kwota: ");
-                string howMuch = Console.ReadLine();
-                if (howMuch == "") return;
-                if (int.TryParse(howMuch, out int amount))
+                int pot = player.GiveCash(amount) * 2;
+                if (pot > 0)
                 {
-                    int pot = player.GiveCash(amount) * 2;
-                    if (pot > 0)
+                    if (random.NextDouble() > szansa)
                     {
-                        if (random.NextDouble() > odds)
-                        {
-                            int winnings = pot;
-                            Console.WriteLine("Wygrałeś: " + winnings + " ZŁ.");
-                            player.ReceiveCash(winnings);
-                        }
-                        else 
-                        {
-                            Console.WriteLine("Niestety przegrałeś");
-                        }
+                        int winnings = pot;
+                        Console.WriteLine("Wygrałeś: " + winnings + " ZŁ.");
+                        player.ReceiveCash(winnings);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Niestety przegrałeś");
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Wpisz poprawną liczbę.");
-                }
-
-
-
             }
-            Console.WriteLine("Kasyno zawsze wygrywa.");
+            else
+            {
+                Console.WriteLine("Wpisz poprawną liczbę.");
+            }
+
+
+
         }
+        Console.WriteLine("Kasyno zawsze wygrywa.");
     }
+}
